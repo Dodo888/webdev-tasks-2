@@ -25,22 +25,22 @@ module.exports = {
         return this;
     },
     equal: function (value) {
-        this.attributeLimits[this.currentAttribute] = this.negation ? {$ne: value} : value;
+        addLimit(this, {$ne: value}, value);
         this.negation = false;
         return this;
     },
     lessThan: function (value) {
-        this.attributeLimits[this.currentAttribute] = this.negation ? {$gte: value} : {$lt: value};
+        addLimit(this, {$gte: value}, {$lt: value});
         this.negation = false;
         return this;
     },
     greaterThan: function (value) {
-        this.attributeLimits[this.currentAttribute] = this.negation ? {$lte: value} : {$gt: value};
+        addLimit(this, {$lte: value}, {$gt: value});
         this.negation = false;
         return this;
     },
     include: function (value) {
-        this.attributeLimits[this.currentAttribute] = this.negation ? {$nin: value} : {$in: value};
+        addLimit(this, {$nin: value}, {$in: value});
         this.negation = false;
         return this;
     },
@@ -102,3 +102,25 @@ module.exports = {
         MongoClient.connect(this.serverUrl, query);
     }
 };
+
+function addLimit (query, ifNegated, ifNotNegated) {
+    if (query.attributeLimits[query.currentAttribute] && !query.attributeLimits['$and']) {
+        query.attributeLimits = {$and: [copy(query.attributeLimits)]};
+    }
+    if (query.attributeLimits['$and']) {
+        var limit = {};
+        limit[query.currentAttribute] = query.negation ? ifNegated : ifNotNegated;
+        query.attributeLimits['$and'].push(limit);
+        return query;
+    }
+    query.attributeLimits[query.currentAttribute] = query.negation ? ifNegated : ifNotNegated;
+    return query;
+}
+
+function copy (obj) {
+    var newObj = {};
+    for (var key in obj) {
+        newObj[key] = obj[key];
+    }
+    return newObj;
+}

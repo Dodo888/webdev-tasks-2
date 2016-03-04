@@ -38,7 +38,9 @@ queue.push(function () {
     multivarka
         .server('mongodb://localhost:27017/test')
         .collection('students')
-        .where('mark').lessThan(4)
+        .where('mark').lessThan(6)
+        .where('mark').greaterThan(3)
+        .where('name').equal('Полина')
         .find(function (err, data) {
             if (!err) {
                 console.log(data);
