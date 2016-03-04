@@ -103,7 +103,7 @@ module.exports = {
     }
 };
 
-function addLimit (query, ifNegated, ifNotNegated) {
+function addLimit(query, ifNegated, ifNotNegated) {
     if (query.attributeLimits[query.currentAttribute] && !query.attributeLimits['$and']) {
         query.attributeLimits = {$and: [copy(query.attributeLimits)]};
     }
@@ -117,7 +117,7 @@ function addLimit (query, ifNegated, ifNotNegated) {
     return query;
 }
 
-function copy (obj) {
+function copy(obj) {
     var newObj = {};
     for (var key in obj) {
         newObj[key] = obj[key];

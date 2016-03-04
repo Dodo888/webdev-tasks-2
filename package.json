@@ -6,5 +6,20 @@
   },
   "scripts": {
     "lint": "jscs ."
-  }
+  },
+  "name": "webdev-tasks-2",
+  "description": "Модуль предоставляет удобный интерфейс для работы mongoDB.",
+  "version": "1.1.1",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dodo888/webdev-tasks-2.git"
+  },
+  "author": "Vladimir Smirnov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dodo888/webdev-tasks-2/issues"
+  },
+  "homepage": "https://github.com/Dodo888/webdev-tasks-2#readme"
 }
